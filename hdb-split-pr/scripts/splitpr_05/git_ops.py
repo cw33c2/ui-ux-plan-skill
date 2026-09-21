@@ -1,0 +1,334 @@
+"""Git operations via subprocess.run.
+
+Every git command in the project goes through this module. No other module
+calls subprocess directly.
+
+Read-only primitives and model-dependent helpers are imported from
+splitpr_common.git_ops; this module adds write operations (with dry-run
+support) and remote/repository identification helpers.
+"""
+
+from __future__ import annotations
+
+import logging
+import subprocess
+
+from splitpr_common.git_ops import (  # noqa: F401 — re-exported
+    GitError,
+    _parse_name_status,
+    _run,
+    detect_base_branch,
+    get_changed_files,
+    get_changed_files_numstat,
+    get_commit_files,
+    get_commit_numstat,
+    get_current_branch,
+    get_diff_stat,
+    get_file_diff,
+    get_file_diff_for_commits,
+    get_head_rev,
+    get_merge_base,
+    get_repo_toplevel,
+    is_git_repo,
+    list_commits,
+)
+
+logger = logging.getLogger(__name__)
+
+
+# ── Write operations (with dry-run support) ──────────────────────────
+
+
+def _run_write(
+    args: list[str], dry_run: bool, timeout: int = 60
+) -> str:
+    """Run a state-modifying command. In dry-run mode, log and skip."""
+    if dry_run:
+        logger.info("[DRY RUN] $ %s", " ".join(args))
+        return ""
+    return _run(args, timeout)
+
+
+def branch_exists(name: str) -> bool:
+    """Check if a local branch exists."""
+    try:
+        _run(["git", "rev-parse", "--verify", f"refs/heads/{name}"])
+        return True
+    except GitError:
+        return False
+
+
+def has_uncommitted_changes() -> bool:
+    """Check if there are uncommitted changes in the working tree."""
+    output = _run(["git", "status", "--porcelain"])
+    return bool(output.strip())
+
+
+def create_branch(
+    name: str, start_point: str, dry_run: bool = False
+) -> None:
+    """Create and switch to a new branch from start_point."""
+    _run_write(["git", "checkout", "-b", name, start_point], dry_run)
+
+
+def checkout_branch(name: str, dry_run: bool = False) -> None:
+    """Switch to an existing branch."""
+    _run_write(["git", "checkout", name], dry_run)
+
+
+def cherry_pick(shas: list[str], dry_run: bool = False) -> bool:
+    """Cherry-pick one or more commits in order. Returns True on success."""
+    if not shas:
+        return True
+    try:
+        _run_write(["git", "cherry-pick"] + shas, dry_run)
+        return True
+    except GitError as e:
+        logger.warning("Cherry-pick failed: %s", e)
+        return False
+
+
+def cherry_pick_abort() -> None:
+    """Abort an in-progress cherry-pick."""
+    try:
+        _run(["git", "cherry-pick", "--abort"])
+    except GitError:
+        pass  # No cherry-pick in progress
+
+
+def checkout_files_from_branch(
+    source_branch: str,
+    files: list[str],
+    dry_run: bool = False,
+) -> None:
+    """Check out specific files from a source branch into the working tree.
+
+    Handles batching to avoid command-line length limits.
+    Files are staged automatically by ``git checkout <branch> -- <files>``.
+    """
+    if not files:
+        return
+    batch_size: int = 50
+    for i in range(0, len(files), batch_size):
+        batch: list[str] = files[i : i + batch_size]
+        _run_write(
+            ["git", "checkout", source_branch, "--"] + batch,
+            dry_run,
+        )
+
+
+def rm_files(
+    files: list[str], dry_run: bool = False
+) -> None:
+    """Remove files from the working tree and index."""
+    if not files:
+        return
+    batch_size: int = 50
+    for i in range(0, len(files), batch_size):
+        batch: list[str] = files[i : i + batch_size]
+        _run_write(["git", "rm", "-f", "--ignore-unmatch"] + batch, dry_run)
+
+
+def commit(message: str, dry_run: bool = False) -> None:
+    """Create a commit with the given message."""
+    _run_write(["git", "commit", "-m", message], dry_run)
+
+
+def push_branch(
+    branch: str,
+    remote: str = "origin",
+    dry_run: bool = False,
+) -> None:
+    """Push a branch to a remote with upstream tracking."""
+    _run_write(
+        ["git", "push", "-u", remote, branch],
+        dry_run,
+        timeout=120,
+    )
+
+
+def create_github_pr(
+    branch: str,
+    base: str,
+    title: str,
+    body: str,
+    dry_run: bool = False,
+) -> str | None:
+    """Create a GitHub PR using the gh CLI. Returns the PR URL or None."""
+    if dry_run:
+        logger.info(
+            '[DRY RUN] $ gh pr create --base "%s" --title "%s" --body "..."',
+            base,
+            title,
+        )
+        return None
+    try:
+        result = subprocess.run(
+            [
+                "gh", "pr", "create",
+                "--base", base,
+                "--title", title,
+                "--body", body,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        if result.returncode != 0:
+            logger.error("Failed to create PR: %s", result.stderr.strip())
+            return None
+        return result.stdout.strip()
+    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+        logger.error("Failed to create PR: %s", e)
+        return None
+
+
+def gh_available() -> bool:
+    """Check if the gh CLI is installed and authenticated."""
+    try:
+        result = subprocess.run(
+            ["gh", "auth", "status"],
+            capture_output=True,
+            timeout=10,
+        )
+        return result.returncode == 0
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return False
+
+
+def delete_branch(
+    name: str, force: bool = False, dry_run: bool = False
+) -> None:
+    """Delete a local branch."""
+    flag = "-D" if force else "-d"
+    _run_write(["git", "branch", flag, name], dry_run)
+
+
+def get_diff_names(base: str, head: str = "HEAD") -> list[str]:
+    """Return the list of file names changed between base and head."""
+    output = _run(["git", "diff", "--name-only", f"{base}..{head}"])
+    return [line.strip() for line in output.splitlines() if line.strip()]
+
+
+# ── Remote / repository identification ───────────────────────────────
+
+
+def get_remote_url(remote: str = "origin") -> str | None:
+    """Return the push URL for a remote, or None if the remote is missing."""
+    try:
+        return _run(["git", "remote", "get-url", "--push", remote])
+    except GitError:
+        return None
+
+
+def get_all_remotes() -> dict[str, str]:
+    """Return {remote_name: push_url} for every configured remote."""
+    try:
+        output = _run(["git", "remote", "-v"])
+    except GitError:
+        return {}
+    remotes: dict[str, str] = {}
+    for line in output.splitlines():
+        parts = line.split()
+        if len(parts) >= 2 and line.rstrip().endswith("(push)"):
+            remotes[parts[0]] = parts[1]
+    return remotes
+
+
+def parse_github_remote(url: str) -> tuple[str, str] | None:
+    """Extract (owner, repo) from a GitHub remote URL.
+
+    Handles:
+      git@github.com:owner/repo.git
+      https://github.com/owner/repo.git
+      ssh://git@github.com/owner/repo.git
+    Returns None if the URL is not a recognisable GitHub URL.
+    """
+    import re
+
+    # SSH: git@github.com:owner/repo.git
+    m = re.match(r"git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$", url)
+    if m:
+        return m.group(1), m.group(2)
+
+    # HTTPS or SSH-scheme: https://github.com/owner/repo.git
+    m = re.match(
+        r"(?:https?|ssh)://(?:[^@]+@)?github\.com/([^/]+)/([^/]+?)(?:\.git)?$",
+        url,
+    )
+    if m:
+        return m.group(1), m.group(2)
+
+    return None
+
+
+def get_gh_repo_info() -> dict[str, str] | None:
+    """Query ``gh`` for the current repo's GitHub metadata.
+
+    Returns a dict with keys like ``nameWithOwner``, ``isFork``,
+    ``parent_nameWithOwner`` (if a fork), or None on failure.
+    """
+    try:
+        result = subprocess.run(
+            [
+                "gh", "repo", "view",
+                "--json", "nameWithOwner,isFork,parent",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        if result.returncode != 0:
+            return None
+        import json
+
+        data: dict = json.loads(result.stdout)
+        info: dict[str, str] = {
+            "nameWithOwner": data.get("nameWithOwner", ""),
+            "isFork": str(data.get("isFork", False)),
+        }
+        parent = data.get("parent")
+        if parent and isinstance(parent, dict):
+            info["parent_nameWithOwner"] = parent.get("nameWithOwner", "")
+        return info
+    except (subprocess.TimeoutExpired, FileNotFoundError, ValueError):
+        return None
+
+
+def describe_repo_context(remote: str = "origin") -> list[str]:
+    """Build human-readable lines describing the repo and remote target.
+
+    Designed for logging at the start of execution so the operator knows
+    exactly which repository will be modified.
+    """
+    lines: list[str] = []
+
+    toplevel: str = get_repo_toplevel()
+    lines.append(f"Repo path:      {toplevel}")
+
+    url: str | None = get_remote_url(remote)
+    if url:
+        lines.append(f"Push remote:    {remote} -> {url}")
+        parsed = parse_github_remote(url)
+        if parsed:
+            lines.append(f"GitHub repo:    {parsed[0]}/{parsed[1]}")
+    else:
+        lines.append(f"Push remote:    {remote} (not configured)")
+
+    # Show all remotes so the user can see origin vs upstream
+    all_remotes: dict[str, str] = get_all_remotes()
+    if len(all_remotes) > 1:
+        for name, rurl in sorted(all_remotes.items()):
+            if name != remote:
+                lines.append(f"Other remote:   {name} -> {rurl}")
+
+    gh_info: dict[str, str] | None = get_gh_repo_info()
+    if gh_info:
+        is_fork: bool = gh_info.get("isFork", "False") == "True"
+        if is_fork:
+            parent: str = gh_info.get("parent_nameWithOwner", "unknown")
+            lines.append(f"Fork of:        {parent}")
+        else:
+            lines.append("Fork:           no (this is the source repo)")
+
+    return lines

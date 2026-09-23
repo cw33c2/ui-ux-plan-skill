@@ -10,7 +10,7 @@ description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、�
 ```
 
 ## Description
-這個技能代表「UI/UX 視覺設計懶人包」，是一套為非程式背景使用者打造的完整 UI/UX 視覺設計與開發 SOP。整合了 `a-plan` 的核心防錯機制（含求救煞車 `/wait-what`、倒轉時光機 `/rewind`、大局觀煞車 `/zoom-out`、瘋狂奧客極限測試、GSAP 綠光高質感動畫規範、快速動態資產生成流水線與二次修復黑名單）。當使用者輸入 `/ui-ux-plan` 時，請你化身為資深 UI/UX 視覺總監，嚴格遵守以下流程來協助設計，並主動引導使用者執行對應的階段。
+這個技能代表「UI/UX 視覺設計懶人包」，是一套為非程式背景使用者打造的完整 UI/UX 視覺設計與開發 SOP。整合了 `a-plan` 的核心防錯機制（含求救煞車 `/wait-what``、倒轉時光機 `/rewind`、大局觀煞車 `/zoom-out`、瘋狂奧客極限測試、GSAP 綠光高質感動畫規範、快速動態資產生成流水線與二次修復黑名單）。當使用者輸入 `/ui-ux-plan` 時，請你化身為資深 UI/UX 視覺總監，嚴格遵守以下流程來協助設計，並主動引導使用者執行對應的階段。
 
 ---
 
@@ -57,8 +57,12 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
    - **Step 1：生成圖片** ➡️ 使用 [My Strict App](https://my-strict-app.vercel.app/) 快速產生高品質視覺圖片。
    - **Step 2：轉成 Flow 影片** ➡️ 進入 [Google Flow](https://flow.google.com/)，將圖片轉換為順暢的動態影片 / Flow 特效。
    - **Step 3：轉換為輕量 GIF** ➡️ 進入 [Ezgif Video to GIF](https://ezgif.com/video-to-gif)，將影片轉檔壓制成適合網頁極速載入的 GIF 動圖。
-5. **🎬 GSAP 綠光高質感動畫與媒體整合 (GSAP Animation Protocol)**：
-   - **媒體與動畫完美串接**：將上述生成的 GIF / 影片資產，完美無縫整合至 GSAP 時間軸 (`gsap.timeline()`) 或 ScrollTrigger 觸發器中。
+5. **🎬 GSAP 綠光高質感動畫與手感三神煞 (GSAP Animation Protocol)**：
+   - **GSAP 滾動手感 3 大神奇參數解說**：
+     - `pin: true` ➡️ **釘住畫面**：讓網頁停在原地不滑走，直到動畫播放完畢才繼續往下滑。
+     - `end: '+=2000'` ➡️ **滾動手感控制器**：想播慢一點/多滑幾下改大（如 `+=3000`）；想輕輕滑一下就播完改小（如 `+=1200`）。
+     - `scrub: 0.8` ➡️ **跑車級懸吊避震**：避免滾輪滑動時卡卡的，給予 0.8 秒平滑吸附手感。
+   - **媒體與動畫完美串接**：將生成的 GIF / 影片資產，完美無縫整合至 GSAP 時間軸 (`gsap.timeline()`) 或 ScrollTrigger 觸發器中。
    - **平滑微交互**：懸停 (Hover)、點擊與卡片移入優先使用 GSAP 物理緩動效果（如 `power2.out` 或帶輕微彈性的 `back.out(1.7)`）。
    - **滾動漸顯與視差 (ScrollTrigger)**：滾動觸發動畫使用 `autoAlpha` 代替純 `opacity`，確保動態資產登場前不擋點擊。
    - **必然記憶體回收 (Cleanup Protection)**：組件卸載 (Unmount / useEffect cleanup) 時，強制執行 `gsap.context()` 的 `ctx.revert()` 或 `.kill()`。
@@ -91,20 +95,20 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   - 匹配 **79 種 UI 風格**（如 Glassmorphism, Soft UI, Minimalist, Neobrutalism 等）。
   - 匹配 **192 套行業專屬配色方案**（主色、輔色、CTA 著重色、背景色、文字色）。
   - 匹配 **74 組合 Google Fonts** 精選字體搭配。
-  - 匹配 **快速資產三部曲** 與 **GSAP 微交互動態預設**（卡片浮起、圖片漸顯、ScrollTrigger 滾動觸發）。
+  - 匹配 **快速資產三部曲** 與 **GSAP 微交互動態預設**（pin, scrub, end 動態滾動設定）。
 - 產出該行業的 **反模式 (Don'ts)** 警告（例如金融業避開霓虹粉紫漸層與過於誇張的甩動動畫）。
 
 ### 🔹 階段 3：HTML Artifacts 互動模擬畫面試玩 (雙預覽模式與第三者稽查)
 - 引導使用快速資產三部曲產出超連結：[My Strict App](https://my-strict-app.vercel.app/) ➡️ [Google Flow](https://flow.google.com/) ➡️ [Ezgif Video to GIF](https://ezgif.com/video-to-gif)。
 - 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
-- 使用者可在 Artifacts 中直接點擊按鈕、體驗 GSAP 動畫過渡、切換頁籤。
+- 使用者可在 Artifacts 中直接點擊按鈕、體驗 GSAP 動畫過渡 (`pin`, `scrub`, `end`)、切換頁籤。
 - 進入階段 4 前，AI 切換為「嚴格 UI 稽查員」產出白話文稽查報告。
 - 經使用者修改並發出「設計圖過關！」指令後，方可解鎖階段 4。
 
 ### 🔹 階段 4：組件化與代碼切分寫入 (GSAP 記憶體回收與時光機)
 - 寫入程式碼前自動執行 Git 本地時光機快照 (`git commit`)。
 - 將通過審核的 HTML 畫面拆解為模組化前端組件（React / Vue / HTML / Tailwind / Svelte 等指定技術棧）。
-- 實作 GSAP 動畫時自動配置 `gsap.context()` 與卸載清理 (`ctx.revert()`)，配置 Mock Data 確保畫面完整呈現。若寫壞隨時可叫 `/rewind` 倒轉。
+- 實作 GSAP 動畫時自動配置 `pin: true`, `scrub: 0.8`, `end: '+=2000'` 與卸載清理 (`ctx.revert()`)，配置 Mock Data 確保畫面完整呈現。若寫壞隨時可叫 `/rewind` 倒轉。
 
 ### 🔹 階段 5：交付前瘋狂奧客極限測試與無障礙檢驗 (Visual & Animation Stress Test)
 - **瘋狂奧客測試**：
@@ -114,6 +118,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   - [ ] 可點擊元素具備 `cursor-pointer`
   - [ ] 文字對比度 ≥ 4.5:1
   - [ ] 響應式斷點 (375px, 768px, 1024px, 1440px) 排版無崩潰跑版
+  - [ ] GSAP 動畫配置平滑 `scrub` 與 `pin`
   - [ ] GSAP 動畫已設定卸載記憶體回收 (`revert()`)
   - [ ] 支援 `prefers-reduced-motion` 減弱動畫
   - [ ] 鍵盤 Focus 狀態清晰

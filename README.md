@@ -10,11 +10,12 @@
    - Step 1：[My Strict App](https://my-strict-app.vercel.app/) 生成圖片
    - Step 2：[Google Flow](https://flow.google.com/) 轉為 Flow 影片
    - Step 3：[Ezgif Video to GIF](https://ezgif.com/video-to-gif) 轉成網頁輕量 GIF
-4. 🎬 **GSAP 綠光高質感動畫規範**：
-   - 物理動態微交互 (`power2.out`, `back.out(1.7)`)
-   - ScrollTrigger 滾動登場 (`autoAlpha`)
-   - 必然記憶體回收機制 (組件卸載時自動 `.revert()` / `.kill()`)
-   - 支援 `prefers-reduced-motion` 無障礙減弱動畫
+4. 🎬 **GSAP 綠光高質感動態手感三神煞**：
+   - `pin: true` ➡️ 網頁停在原地不滑走，等動畫播完才繼續往下滑。
+   - `end: '+=2000'` ➡️ 滾動手感控制器（想滑久一點改大 `+=3000`，輕輕滑完改小 `+=1200`）。
+   - `scrub: 0.8` ➡️ 跑車級懸吊避震（給予 0.8 秒平滑吸附手感，避免滾輪卡卡）。
+   - 必然記憶體回收機制 (組件卸載時自動 `.revert()` / `.kill()`)。
+   - 支援 `prefers-reduced-motion` 無障礙減弱動畫。
 5. 🕹️ **雙預覽試玩機制 (Artifacts)**：先在聊天室產出可互動 HTML/GSAP 試玩，確認過關後才寫入專案。
 6. 🛡️ **鋼鐵安全機制**：
    - 🆘 `/wait-what` 求救煞車鍵

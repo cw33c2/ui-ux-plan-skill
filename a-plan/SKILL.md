@@ -96,8 +96,8 @@ description: 啟動 A計畫懶人包 SOP (從零到一完整開發與維護流�
 - **評估需求清晰度**：依據「專屬 AI 顧問溝通協議」，需求清晰則直接下一步，模糊或有風險才觸發追問。
 - **初始化字典檔 (Domain Dictionary)**：統一專案中英文名詞對照，並建立/更新至 `docs/DICTIONARY.md`。
 - **需求轉化與設計文件**：呼叫 `/hdb:design` 產出 PRD 與架構文件，更新 `docs/PROJECT_STATUS.md` 並同步轉換為 GitHub Issues。（註：PRD 等文件可寫入本地檔案）
-- **UI/UX 風格提案 (Vibe Check)**：提供配色與排版主題供選擇。
-- **假設計圖試玩與預覽 (Interactive Mockup & Visual QA)**：提供兩種預覽模式：A. 在聊天室 Artifacts 產出 HTML 假畫面；B. 建立前端 Mock 組件並使用 Playwright/shot-scraper 自動截圖供使用者審核。
+- **UI/UX 風格提案與自動規則匹配 (Vibe Check)**：強制自動調用 `ui-ux-pro-max` 技能大腦（`search.py`），進行 192 條行業規則、79 條 UI 風格、配色方案與 Google Fonts 字體自動匹配。
+- **假設計圖試玩與預覽 (Interactive Mockup & Visual QA)**：提供兩種預覽模式：A. 在聊天室 Artifacts 產出符合 UI UX Pro Max 規範的高質感 HTML 假畫面；B. 建立前端 Mock 組件並使用 Playwright/shot-scraper 自動截圖供使用者審核。
 - **設計圖通關閘門**：未得到「設計圖過關！」指令前，嚴禁將最終正式業務邏輯程式碼改寫入專案檔案。
 
 ### 🔹 階段 3：核心邏輯與分區開發 (一步步來)

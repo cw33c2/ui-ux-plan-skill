@@ -1,4 +1,4 @@
-# UI/UX 視覺設計懶人包 (UI-UX Plan SOP)
+# 《麻瓜也能懂的 UI/UX 視覺設計與 GSAP 動態美學手冊》 (UI-UX Plan SOP)
 
 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、倒轉時光機、奧客測試、GSAP 高質感動畫規範、快速動態資產生成流水線與防當機黑名單)。
 使用者輸入 `/ui-ux-plan` 時觸發，指引視覺風格匹配、配色方案、Google Fonts 選擇、GSAP 平滑微交互、快速動態資產流水線、Artifacts 假畫面試玩、極限破壞測試與設計系統持久化。

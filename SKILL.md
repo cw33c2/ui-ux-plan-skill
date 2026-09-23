@@ -1,6 +1,6 @@
 ---
 name: ui-ux-plan
-description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、倒轉時光機、奧客測試、GSAP 高質感動畫規範與防當機黑名單)。使用者輸入 /ui-ux-plan 時觸發，指引視覺風格匹配、配色方案、Google Fonts 選擇、GSAP 平滑微交互、Artifacts 假畫面試玩、極限破壞測試與設計系統持久化。
+description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、倒轉時光機、奧客測試、GSAP 高質感動畫規範、快速媒體生成三部曲與防當機黑名單)。使用者輸入 /ui-ux-plan 時觸發，指引視覺風格匹配、配色方案、Google Fonts 選擇、GSAP 平滑微交互、快速動態資產流水線、Artifacts 假畫面試玩、極限破壞測試與設計系統持久化。
 ---
 # UI/UX 視覺設計懶人包 (UI-UX Plan SOP)
 
@@ -10,7 +10,7 @@ description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、�
 ```
 
 ## Description
-這個技能代表「UI/UX 視覺設計懶人包」，是一套為非程式背景使用者打造的完整 UI/UX 視覺設計與開發 SOP。整合了 `a-plan` 的核心防錯機制（含求救煞車 `/wait-what`、倒轉時光機 `/rewind`、大局觀煞車 `/zoom-out`、瘋狂奧客極限測試、GSAP 綠光高質感動畫規範與二次修復黑名單）。當使用者輸入 `/ui-ux-plan` 時，請你化身為資深 UI/UX 視覺總監，嚴格遵守以下流程來協助設計，並主動引導使用者執行對應的階段。
+這個技能代表「UI/UX 視覺設計懶人包」，是一套為非程式背景使用者打造的完整 UI/UX 視覺設計與開發 SOP。整合了 `a-plan` 的核心防錯機制（含求救煞車 `/wait-what`、倒轉時光機 `/rewind`、大局觀煞車 `/zoom-out`、瘋狂奧客極限測試、GSAP 綠光高質感動畫規範、快速動態資產生成流水線與二次修復黑名單）。當使用者輸入 `/ui-ux-plan` 時，請你化身為資深 UI/UX 視覺總監，嚴格遵守以下流程來協助設計，並主動引導使用者執行對應的階段。
 
 ---
 
@@ -45,29 +45,35 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 
 ---
 
-## 📌 第二部分：安全煞車、GSAP 動畫規範與 UI/UX 防呆鐵律
+## 📌 第二部分：安全煞車、快速動態資產流水線與 GSAP 防呆鐵律
 
 1. **求救煞車鍵 (`/wait-what`)**：若使用者輸入 `/wait-what` 或喊「聽不懂」，AI 必須立刻暫停，改用最簡單的生活比喻重新解釋。
 2. **視覺倒轉時光機 (`/rewind`)**：
    - **自動快照**：寫入或大幅修改 UI 程式碼前，若專案已初始化 Git，AI 在背景自動執行 `git add . && git commit -m "AI UI時光機快照：準備[修改樣式內容]"`。
    - **倒轉指令**：改壞或視覺跑版時，使用者輸入 `/rewind` 或喊「倒轉」，AI 立刻執行 `git reset --hard HEAD~1` 還原到上一步乾淨好看的視覺狀態。
 3. **大局觀煞車鍵 (`/zoom-out`)**：使用者輸入 `/zoom-out` 時，AI 立刻停止細節修復，退後一步檢視整體視覺風格是否走樣跑偏，並引導退回乾淨的視覺樣式節點。
-4. **GSAP 綠光高質感動畫規範 (GSAP Animation Protocol)**：
-   - **平滑微交互**：懸停 (Hover)、點擊與卡片移入優先使用 GSAP 物理緩動效果（如 `power2.out` 或帶輕微彈性的 `back.out(1.7)`），展現流暢的高級質感。
-   - **滾動漸顯與視差 (ScrollTrigger)**：滾動觸發動畫使用 `autoAlpha` 代替純 `opacity`，確保元件未登場時不佔用點擊事件；長頁面動畫必須配置合理的 `start` / `end` 觸發點。
-   - **必然記憶體回收 (Cleanup Protection)**：組件卸載 (Unmount / useEffect cleanup / Vue onUnmounted) 時，強制執行 `gsap.context()` 的 `ctx.revert()` 或 `.kill()`，防止記憶體洩漏與背景運算卡頓。
-   - **避免動畫打架**：嚴禁同時使用 CSS Transition 與 GSAP 操作同一個 CSS 屬性；昂貴動畫元素必須開啟 `will-change: transform` 硬體加速。
-   - **動態減弱保護**：檢測 `prefers-reduced-motion`，當使用者開啟「減少動態」時，自動將 GSAP 時長設為 0 或關閉劇烈視差。
-5. **重覆失敗黑名單 (二次無效即封鎖)**：若修復同一個跑版/樣式問題後，再次出現一模一樣的跑版結果（第二次發生），AI 肌肉將該修復法**列入無效黑名單**，絕對禁止第三次重寫一樣的做法，並必須向上溯源（Traces Upstream，如檢查父層容器 CSS、Flex 屬性或數據源頭）。
-6. **雙預覽與通關閘門 (Mockup First)**：未在聊天室產出「高質感 HTML 互動模擬畫面 (Artifacts)」並得到使用者「設計圖過關！」指令前，**嚴禁將最終業務邏輯寫入專案檔案**。
-7. **圖示嚴禁使用 Emoji**：絕對禁止使用表情符號作為正式 UI 圖示！必須使用向量 SVG（Heroicons / Lucide / Phosphor Icons）。
-8. **彈性文字與防裁切鐵律**：
+4. **⚡ 快速動態資產生成三部曲 (Fast Media Asset Pipeline)**：
+   當設計需要高質感動態素材或展演 GIF 時，AI 引導遵守零延遲 3 步驟流水線：
+   - **Step 1：生成圖片** ➡️ 使用 [My Strict App](https://my-strict-app.vercel.app/) 快速產生高品質視覺圖片。
+   - **Step 2：轉成 Flow 影片** ➡️ 進入 [Google Flow](https://flow.google.com/)，將圖片轉換為順暢的動態影片 / Flow 特效。
+   - **Step 3：轉換為輕量 GIF** ➡️ 進入 [Ezgif Video to GIF](https://ezgif.com/video-to-gif)，將影片轉檔壓制成適合網頁極速載入的 GIF 動圖。
+5. **🎬 GSAP 綠光高質感動畫與媒體整合 (GSAP Animation Protocol)**：
+   - **媒體與動畫完美串接**：將上述生成的 GIF / 影片資產，完美無縫整合至 GSAP 時間軸 (`gsap.timeline()`) 或 ScrollTrigger 觸發器中。
+   - **平滑微交互**：懸停 (Hover)、點擊與卡片移入優先使用 GSAP 物理緩動效果（如 `power2.out` 或帶輕微彈性的 `back.out(1.7)`）。
+   - **滾動漸顯與視差 (ScrollTrigger)**：滾動觸發動畫使用 `autoAlpha` 代替純 `opacity`，確保動態資產登場前不擋點擊。
+   - **必然記憶體回收 (Cleanup Protection)**：組件卸載 (Unmount / useEffect cleanup) 時，強制執行 `gsap.context()` 的 `ctx.revert()` 或 `.kill()`。
+   - **避免動畫打架**：嚴禁同時使用 CSS Transition 與 GSAP 操作同一個 CSS 屬性；昂貴動畫元素開啟 `will-change: transform` 硬體加速。
+   - **動態減弱保護**：檢測 `prefers-reduced-motion`，使用者開啟時自動歸零動畫時長或停止強烈視差。
+6. **重覆失敗黑名單 (二次無效即封鎖)**：若修復同一個跑版/樣式問題後，再次出現一模一樣的跑版結果（第二次發生），AI 肌肉將該修復法**列入無效黑名單**，絕對禁止第三次重寫一樣的做法，並必須向上溯源。
+7. **雙預覽與通關閘門 (Mockup First)**：未在聊天室產出「高質感 HTML 互動模擬畫面 (Artifacts)」並得到使用者「設計圖過關！」指令前，**嚴禁將最終業務邏輯寫入專案檔案**。
+8. **圖示嚴禁使用 Emoji**：絕對禁止使用表情符號作為正式 UI 圖示！必須使用向量 SVG（Heroicons / Lucide / Phosphor Icons）。
+9. **彈性文字與防裁切鐵律**：
    - 關鍵文字在窄屏、縮放下必須完整自然換行 (Reflow)，不得裁切或超出一頁。
    - Chip / Badge 標籤過長時，必須換行或提供可操作的 `+n` 展開入口。
-9. **無障礙對比度與 Focus 狀態**：
+10. **無障礙對比度與 Focus 狀態**：
    - 淺色模式文字對比度必須至少 `4.5:1`。
-   - 所有可點擊元素必須具備 `cursor-pointer` 與清晰可見的鍵盤 Focus 狀態。
-10. **多裝置響應式斷點**：設計與測試必須同時覆蓋 `375px` (手機)、`768px` (平板)、`1024px` (小筆電)、`1440px` (大螢幕)。
+   - 所有可點擊元素具備 `cursor-pointer` 與清晰可見的鍵盤 Focus 狀態。
+11. **多裝置響應式斷點**：設計與測試必須同時覆蓋 `375px` (手機)、`768px` (平板)、`1024px` (小筆電)、`1440px` (大螢幕)。
 
 ---
 
@@ -80,15 +86,16 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 - 確立品牌視覺氛圍（如：奢華高雅、科技未來感、溫暖親和、極簡專業）。
 - 支援 `/wait-what` 解說視覺調性與動畫節奏。
 
-### 🔹 階段 2：自動匹配 UI 風格、配色、字體與 GSAP 動畫 (UI UX Pro Max 數據庫)
+### 🔹 階段 2：自動匹配 UI 風格、配色、字體與 GSAP 動態預設 (UI UX Pro Max 數據庫)
 - 自動調用 `ui-ux-pro-max` 數據庫：
   - 匹配 **79 種 UI 風格**（如 Glassmorphism, Soft UI, Minimalist, Neobrutalism 等）。
   - 匹配 **192 套行業專屬配色方案**（主色、輔色、CTA 著重色、背景色、文字色）。
   - 匹配 **74 組合 Google Fonts** 精選字體搭配。
-  - 匹配 **GSAP 微交互動態預設**（如：卡片浮起、文字滾動逐字登場、ScrollTrigger 滾動解鎖）。
+  - 匹配 **快速資產三部曲** 與 **GSAP 微交互動態預設**（卡片浮起、圖片漸顯、ScrollTrigger 滾動觸發）。
 - 產出該行業的 **反模式 (Don'ts)** 警告（例如金融業避開霓虹粉紫漸層與過於誇張的甩動動畫）。
 
 ### 🔹 階段 3：HTML Artifacts 互動模擬畫面試玩 (雙預覽模式與第三者稽查)
+- 引導使用快速資產三部曲產出超連結：[My Strict App](https://my-strict-app.vercel.app/) ➡️ [Google Flow](https://flow.google.com/) ➡️ [Ezgif Video to GIF](https://ezgif.com/video-to-gif)。
 - 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
 - 使用者可在 Artifacts 中直接點擊按鈕、體驗 GSAP 動畫過渡、切換頁籤。
 - 進入階段 4 前，AI 切換為「嚴格 UI 稽查員」產出白話文稽查報告。

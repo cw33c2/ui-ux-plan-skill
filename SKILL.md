@@ -1,6 +1,6 @@
 ---
 name: ui-ux-plan
-description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、倒轉時光機、奧客測試、GSAP Apple級動態影片滾動特效 Scroll-bound Video、SVG遮罩放大揭露、文字逐字彈跳漸層、Flip.js卡片無縫過渡、Ezgif PNG序列分割器、Google Flow影片生成、WordPress外掛自動打包與防當機黑名單)。使用者輸入 /ui-ux-plan 時觸發，指引視覺風格匹配、配色方案、Google Fonts 選擇、GSAP 平滑微交互、Apple級滾動影片特效、SVG遮罩放大、文字逐字切分彈跳、Flip.js無縫卡片過渡、WordPress 外掛封裝、Artifacts 假畫面試玩、極限破壞測試與設計系統持久化。
+description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、倒轉時光機、奧客測試、GSAP Apple級動態影片滾動特效 Scroll-bound Video、SVG遮罩放大揭露、文字逐字彈跳漸層、Flip.js卡片無縫過渡、全透明參數控制面板、Ezgif PNG序列分割器、Google Flow影片生成、WordPress外掛自動打包與防當機黑名單)。使用者輸入 /ui-ux-plan 時觸發，指引視覺風格匹配、配色方案、Google Fonts 選擇、GSAP 平滑微交互、Apple級滾動影片特效、SVG遮罩放大、文字逐字切分彈跳、Flip.js無縫卡片過渡、WordPress 外掛封裝、Artifacts 假畫面試玩、極限破壞測試與設計系統持久化。
 ---
 # 《麻瓜也能懂的 UI/UX 視覺設計與 GSAP 動態美學手冊》 (UI-UX Plan SOP)
 
@@ -10,7 +10,7 @@ description: 啟動 UI/UX 視覺設計懶人包 SOP (整合 a-plan 雙煞車、�
 ```
 
 ## Description
-本手冊《麻瓜也能懂的 UI/UX 視覺設計與 GSAP 動態美學手冊》代表「UI/UX 視覺設計懶人包」，是一套為非程式背景使用者打造的完整 UI/UX 視覺設計與開發 SOP。本 SOP 與 `a-plan` 雙向接軌相容，整合了核心防錯機制（含求救煞車 `/wait-what`、倒轉時光機 `/rewind`、大局觀煞車 `/zoom-out`、瘋狂奧客極限測試、GSAP 綠光高質感動畫規範、Apple級影片滾動特效 Scroll-bound Video、SVG 遮罩曝光揭露特效、文字逐字彈跳漸層特效、Flip.js 卡片佈局無縫過渡特效、Ezgif PNG 序列分割流水線、WordPress 外掛自動封裝流水線、快速動態資產生成三部曲與向上溯源防跑版黑名單）。當使用者輸入 `/ui-ux-plan` 時，請你化身為資深 UI/UX 視覺總監，嚴格遵守以下流程協助設計，並引導執行對應階段。
+本手冊《麻瓜也能懂的 UI/UX 視覺設計與 GSAP 動態美學手冊》代表「UI/UX 視覺設計懶人包」，是一套為非程式背景使用者打造的完整 UI/UX 視覺設計與開發 SOP。本 SOP 與 `a-plan` 雙向接軌相容，整合了核心防錯機制（含求救煞車 `/wait-what`、倒轉時光機 `/rewind`、大局觀煞車 `/zoom-out`、瘋狂奧客極限測試、GSAP 綠光高質感動畫規範、Apple級影片滾動特效 Scroll-bound Video、SVG 遮罩曝光揭露特效、文字逐字彈跳漸層特效、Flip.js 卡片佈局無縫過渡特效、全透明參數顯化控制面板、Ezgif PNG 序列分割流水線、WordPress 外掛自動封裝流水線、快速動態資產生成三部曲與向上溯源防跑版黑名單）。當使用者輸入 `/ui-ux-plan` 時，請你化身為資深 UI/UX 視覺總監，嚴格遵守以下流程協助設計，並引導執行對應階段。
 
 ---
 
@@ -82,7 +82,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
    - **資源引入規範**：HTML 使用 CDN 引入 `gsap.min.js`、`ScrollTrigger.min.js` 與 `Flip.min.js`；React/Next.js 使用 `import gsap from 'gsap'`、`import { ScrollTrigger } from 'gsap/ScrollTrigger'` 與 `import { Flip } from 'gsap/Flip'`。
    - **必然記憶體回收 (Cleanup Protection)**：組件卸載 (Unmount / useEffect cleanup) 時，強制執行 `gsap.context()` 的 `ctx.revert()` 或 `.kill()`，同時清空 Canvas 繪圖快取。
    - **動態減弱保護**：檢測 `prefers-reduced-motion`，使用者開啟時自動歸零動畫時長或停止序列播放改為靜態展演。
-6. **重覆失敗黑名單與向上溯源 (Anti-Recurrence & Upstream Trace)**：若修復同一個跑版/樣式問題後再次出現一模一樣的跑版結果（第二次發生），AI 必須將該修復法**列入無效黑名單**，絕對禁止第三次重寫一樣做法，並必須向上溯源檢查 HTML DOM 結構或父層排版。
+6. **重覆失敗黑名單與向上溯源 (Anti-Recurrence & Upstream Trace)**：若修復同一個跑版/樣式問題後再次出現一模一樣的跑版結果（第二次發生），AI 肌肉將該修復法**列入無效黑名單**，絕對禁止第三次重寫一樣做法，並必須向上溯源檢查 HTML DOM 結構或父層排版。
 7. **雙預覽與通關閘門 (Mockup First)**：未在聊天室產出「高質感 HTML 互動模擬畫面 (Artifacts)」並得到使用者「設計圖過關！」指令前，**嚴禁將最終業務邏輯寫入專案檔案**。
 8. **圖示嚴禁使用 Emoji**：絕對禁止使用表情符號作為正式 UI 圖示！必須使用向量 SVG（Heroicons / Lucide / Phosphor Icons）。
 9. **彈性文字與防裁切鐵律**：
@@ -104,27 +104,67 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 - 確立品牌視覺氛圍（如：奢華高雅、科技未來感、溫暖親和、極簡專業）。
 - 支援 `/wait-what` 解說視覺調性與動畫節奏。
 
-### 🔹 階段 2：自動匹配 UI 風格、配色、字體與四大頂級動畫特效選單
+### 🔹 階段 2：自動匹配 UI 風格、配色、字體與四大頂級特效全透明參數控制面板
 - 自動評估與匹配：
   - 匹配 **UI 風格**（如 Glassmorphism, Soft UI, Minimalist, Neobrutalism 等）。
   - 匹配 **行業專屬配色方案**（主色、輔色、CTA 著重色、背景色、文字色）。
   - 匹配 **Google Fonts** 精選字體搭配。
-- **🎬 頂級視覺動畫選單 (Effect Selector)**：AI 呼叫 `ask_question` 選單供自由單選或多選組合：
-  - 1. 🍎 **Apple 級影片滾動特效 (Scroll-bound Video)**：適合產品 360 度隨滾動播放。（引導上傳原圖 ➡️ Google Flow ➡️ Ezgif 轉 PNG 序列 ➡️ Canvas）
-  - 2. 🍸 **SVG 遮罩放大揭露特效 (SVG Mask Zoom Reveal)**：適合品牌亮相、新品曝光。（引導選擇遮罩圖形：酒杯/Logo/圓形，與被揭露的高清圖文）
-  - 3. 🔤 **文字逐字彈跳與金屬漸層 (Stagger Text Animation)**：適合主標題高級登場。（引導輸入主標題內容如 `MOJITO`，與金屬漸層色彩）
-  - 4. 🃏 **Flip.js 卡片佈局無縫過渡 (FLIP Animation)**：適合菜單篩選、商品分類過慮、購物車飛入。
-- 產出該行業的 **反模式 (Don'ts)** 警告（例如金融業避開霓虹粉紫漸層與過於誇張的甩動動畫）。
+- **🎬 4 大頂級視覺特效「全透明參數控制面板」 (Effect Transparent Control Panel)**：
+  當使用者勾選一個或多個特效時，AI 必須**單獨且詳細印出每個技能的所有具體參數與可修訂項**，讓使用者第一時間完全了解並可直接修改：
+
+  #### 1. 🔤 【技能一：文字逐字彈跳與漸層 (Stagger Text Animation)】
+  ```yaml
+  文字內容 (Text Content): "MOJITO MASTER" (可直接修改)
+  副標題內容 (Subtitle): "Sip the Spirit of Summer..." (可直接修改)
+  標題字體大小 (Font Size): "6xl (60px) md:8xl (96px)" (可改 4xl, 5xl 等)
+  登場動畫時間 (Duration): 1.2 秒 (可改 0.8s, 1.5s)
+  逐字錯開時間差 (Stagger): 0.04 秒 (可改 0.02s 快速, 0.08s 慢速)
+  緩動物理手感 (Easing): "expo.out" (跑車級快彈慢煞車)
+  文字漸層色彩 (Text Gradient): "linear-gradient(135deg, #f6d365 0%, #fda085 100%)" (金屬金黃)
+  出現位置 (Trigger Position): 頁面一載入即播放 (也可改滾動到該區塊 50% 時出現)
+  ```
+
+  #### 2. 🍸 【技能二：SVG 遮罩放大揭露特效 (SVG Mask Zoom Reveal)】
+  ```yaml
+  遮罩圖形 (Mask Shape): "預設酒杯/圓形 SVG" (可選: 圓形/Logo/鑰匙孔/自訂SVG路徑)
+  初始遮罩大小 (Start Mask Size): 100% (只露出一小區塊)
+  最終放大倍率 (End Mask Size): 2500% (極速擴大至全全螢幕)
+  向下滑動距離 (Scroll End Distance): "+=2000px" (向下滑動 2000px 播放完畢)
+  避震滾動手感 (Scrub): 0.8 秒 (給予平滑吸附手感)
+  釘住畫面 (Pinning): pin: true (網頁停在原地不滑走，遮罩放完才繼續滑)
+  被揭露的高清圖片 (Revealed Image): "Ununsplash 酒吧質感大圖" (可替換自訂網址/路徑)
+  被揭露的標題與文字 (Revealed Content): "Crafted to Perfection" (可直接修改)
+  ```
+
+  #### 3. 🍎 【技能三：Apple 級影片滾動播放特效 (Scroll-bound Video)】
+  ```yaml
+  主角/產品圖片 (Original Image): "My Strict App 產生圖片" (Step 1 可替換)
+  AI 動態影片 (Google Flow MP4): "Google Flow 轉 MP4" (Step 2 可替換)
+  PNG 圖片序列總幀數 (Frame Count): 147 張 (Ezgif 視訊轉 PNG 切分)
+  向下滑動距離 (Scroll End Distance): "+=2500px" (向下滑動 2500px 完成播放)
+  避震滾動手感 (Scrub): 0.5 秒 (毫秒級隨滑鼠順播與倒播)
+  釘住畫面 (Pinning): pin: true (釘住 Canvas，播完才繼續往下滑)
+  字幕一 (Text 1): "重塑音質，超越想像。" (於滾動 5%~25% 時出現，可改)
+  字幕二 (Text 2): "隨滑鼠滾動，極速順播與倒播。" (於滾動 45%~65% 時出現，可改)
+  ```
+
+  #### 4. 🃏 【技能四：Flip.js 卡片佈局無縫過渡 (FLIP Animation)】
+  ```yaml
+  分類按鈕列 (Categories): ["全部展示 (All)", "經典系列 (Classic)", "水果特調 (Fruit)"]
+  平滑過渡時間 (Duration): 0.7 秒 (可改 0.5s 極速, 1.0s 慢速)
+  卡片錯開滑動時間 (Stagger): 0.05 秒 (卡片順序滑動)
+  卡片資料內容 (Cards Data): [Mojito, Strawberry Daiquiri, Old Fashioned...] (可直接修改/新增卡片)
+  淡入淡出縮放 (Scale & Fade): onEnter 0.8->1.0, onLeave 1.0->0.8
+  ```
+
+- **即時修訂與馬上更新**：使用者可直接打字修改上述任何參數（例如：「將標題改成 AIRPODS PRO，遮罩改成圓形，影片滑動距離改為 +=3000px」），AI 立刻更新參數並重新編譯更新展示畫面！
+- 產出該行業的 **反模式 (Don'ts)** 警告。
 - **1+1>2 介接點**：產出專案 Theme Tokens 與視覺定調後，自動準備交由 `a-plan` 建立對應的 Zod Schema 型別。
 
 ### 🔹 階段 3：HTML Artifacts 互動模擬畫面試玩 (雙預覽模式與第三者稽查)
-- 依據選定的特效組合產出資源與試玩：
-  - 若選擇 Apple 影片：使用 Apple 資產四部曲（My Strict App ➡️ Google Flow ➡️ Ezgif Video to PNG ➡️ GSAP Canvas）。
-  - 若選擇 SVG 遮罩放大：載入選定 SVG 遮罩並建立 `maskSize: 400%` 滾動揭露樣式。
-  - 若選擇文字逐字彈跳：使用 `SplitType` 或 `SplitText` 將輸入的主標題文字（如 `MOJITO`）拆切並設定 `stagger: 0.06` 彈跳。
-  - 若選擇 Flip.js 卡片過渡：建立分類篩選按鈕列與 `Flip.from(state)` 動態切分效果。
-- 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
-- 使用者可在 Artifacts 中直接滾動滑鼠體驗選定的特效過渡、點擊按鈕、切換頁籤。
+- 依據選定與修改後的特效參數產出資源與試玩：
+  - 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
+  - 使用者可在 Artifacts 中直接滾動滑鼠體驗選定的特效過渡、點擊按鈕、切換頁籤。
 - 進入階段 4 前，AI 切換為「嚴格 UI 稽查員」產出白話文稽查報告。
 - 經使用者修改並發出「設計圖過關！」指令後，方可解鎖階段 4。
 - **🚀 1+1>2 切換引導**：當使用者輸入「設計圖過關！」且準備進入代碼切分或完成視覺時，AI 必須主動提示：「🎉 視覺設計圖已確認過關！您希望繼續完成前端組件寫入，或是切換至工程核心開發？」並呼叫 `ask_question` 提供快速按鈕：「🚀 切換至 /a-plan 開始寫工程邏輯 (Zod 型別與單元測試)」。

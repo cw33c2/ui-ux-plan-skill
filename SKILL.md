@@ -82,7 +82,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
    - **資源引入規範**：HTML 使用 CDN 引入 `gsap.min.js`、`ScrollTrigger.min.js` 與 `Flip.min.js`；React/Next.js 使用 `import gsap from 'gsap'`、`import { ScrollTrigger } from 'gsap/ScrollTrigger'` 與 `import { Flip } from 'gsap/Flip'`。
    - **必然記憶體回收 (Cleanup Protection)**：組件卸載 (Unmount / useEffect cleanup) 時，強制執行 `gsap.context()` 的 `ctx.revert()` 或 `.kill()`，同時清空 Canvas 繪圖快取。
    - **動態減弱保護**：檢測 `prefers-reduced-motion`，使用者開啟時自動歸零動畫時長或停止序列播放改為靜態展演。
-6. **重覆失敗黑名單與向上溯源 (Anti-Recurrence & Upstream Trace)**：若修復同一個跑版/樣式問題後再次出現一模一樣的跑版結果（第二次發生），AI 肌肉將該修復法**列入無效黑名單**，絕對禁止第三次重寫一樣做法，並必須向上溯源檢查 HTML DOM 結構或父層排版。
+6. **重覆失敗黑名單與向上溯源 (Anti-Recurrence & Upstream Trace)**：若修復同一個跑版/樣式問題後再次出現一模一樣的跑版結果（第二次發生），AI 必須將該修復法**列入無效黑名單**，絕對禁止第三次重寫一樣做法，並必須向上溯源檢查 HTML DOM 結構或父層排版。
 7. **雙預覽與通關閘門 (Mockup First)**：未在聊天室產出「高質感 HTML 互動模擬畫面 (Artifacts)」並得到使用者「設計圖過關！」指令前，**嚴禁將最終業務邏輯寫入專案檔案**。
 8. **圖示嚴禁使用 Emoji**：絕對禁止使用表情符號作為正式 UI 圖示！必須使用向量 SVG（Heroicons / Lucide / Phosphor Icons）。
 9. **彈性文字與防裁切鐵律**：
@@ -135,14 +135,14 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   ```yaml
   遮罩圖形 (Mask Shape): "預設酒杯/圓形 SVG" (可選: 圓形/Logo/鑰匙孔/自訂SVG路徑)
   初始遮罩大小 (Start Mask Size): 100% (只露出一小區塊)
-  最終放大倍率 (End Mask Size): 2500% (極速擴大至全全螢幕)
+  最終放大倍率 (End Mask Size): 2500% (極速擴大至全螢幕)
   向下滑動距離 (Scroll End Distance): "+=2000px" (向下滑動 2000px 播放完畢)
   避震滾動手感 (Scrub): 0.8 秒 (給予平滑吸附手感)
   釘住畫面 (Pinning): pin: true (網頁停在原地不滑走，遮罩放完才繼續滑)
   被揭露的高清圖片 (Revealed Image): "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b"
   圖片來源 / 出處 (Image Source / Attribution): "Unsplash (免費商業授權圖片: 奢華酒吧質感大圖)"
   被揭露的標題與文字 (Revealed Content): "Crafted to Perfection" (可直接修改)
-  [備註 / 擴充與替代建议]:
+  [備註 / 擴充與替代建議]:
     - 💡 擴充事項：可增加「遮罩邊緣模糊 (Feather Glow)」或「雙重 SVG 遞進遮罩 (Dual Mask Wave)」。
     - 🔄 替代方案：若不使用 SVG Mask，可改用 CSS `clip-path: circle(50% at 50% 50%)` 或 Canvas 繪圖模式 (globalCompositeOperation) 實現更相容的透視效果。
   ```
@@ -185,8 +185,12 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 
 ### 🔹 階段 3：HTML Artifacts 互動模擬畫面試玩 (雙預覽模式與第三者稽查)
 - 依據選定與修改後的特效參數產出資源與試玩：
-  - 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
-  - 使用者可在 Artifacts 中直接滾動滑鼠體驗選定的特效過渡、點擊按鈕、切換頁籤。
+  - 若包含 SplitText 逐字彈跳：使用 `SplitType` 或 `SplitText` 將標題拆切字母並綁定 `stagger: 0.04s` 彈跳。
+  - 若包含 SVG 遮罩放大：載入選定 SVG 遮罩並建立 `maskSize: 2500%` 滾動揭露樣式與圖片出處標記。
+  - 若包含 Apple 影片滾動：啟動 4 步驟流水線資產，載入 Canvas 並綁定 ScrollTrigger `scrub: 0.5s` 控制 `frame`。
+  - 若包含 Flip.js 卡片過渡：建立分類篩選列與 `Flip.from(state)` 動態切分效果。
+- 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
+- 使用者可在 Artifacts 中直接滾動滑鼠體驗選定的特效過渡、點擊按鈕、切換頁籤。
 - 進入階段 4 前，AI 切換為「嚴格 UI 稽查員」產出白話文稽查報告。
 - 經使用者修改並發出「設計圖過關！」指令後，方可解鎖階段 4。
 - **🚀 1+1>2 切換引導**：當使用者輸入「設計圖過關！」且準備進入代碼切分或完成視覺時，AI 必須主動提示：「🎉 視覺設計圖已確認過關！您希望繼續完成前端組件寫入，或是切換至工程核心開發？」並呼叫 `ask_question` 提供快速按鈕：「🚀 切換至 /a-plan 開始寫工程邏輯 (Zod 型別與單元測試)」。
@@ -194,8 +198,8 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 ### 🔹 階段 4：組件化寫入與 WordPress 自動外掛封裝
 - 寫入程式碼前自動執行 Git 本地時光機快照 (`git commit`)。
 - 將通過審核的 HTML 畫面拆解為模組化前端組件（React / Vue / HTML / Tailwind / Svelte / **WordPress Plugin** 等指定技術棧）。
-- **WordPress 專屬自動封裝規範 (WP Integration Protocol)**：
-  - 若目標為 WordPress，優先封裝為獨立 Plugin (外掛)，包含獨立 `.php` 入口主檔、`assets/css/` 與 `assets/js/` (含 PNG 序列、Flip.js 與 SVG 遮罩圖片資源目錄)。
+- **WordPress 專屬自動封裝規範 (WP Integration Protocol)** *(僅在使用者明確指定要發布至 WordPress 時觸發)*：
+  - 封裝為獨立 Plugin (外掛)，包含獨立 `.php` 入口主檔、`assets/css/` 與 `assets/js/` (含 PNG 序列、Flip.js 與 SVG 遮罩圖片資源目錄)。
   - 使用 `wp_enqueue_script` 與 `wp_enqueue_style` 正確註冊 GSAP 核心、ScrollTrigger 外掛、Flip.js、SplitType 與特效腳本。
   - 註冊自訂 Shortcode (如 `[gsap_apple_video]`, `[gsap_mask_reveal]`, `[gsap_stagger_text]`, `[gsap_flip_menu]`)，並相容 Elementor / Gutenberg 區塊編輯器。
   - **自動壓縮打包**：產出的外掛目錄自動打包生成 `.zip` 檔案（不進 Commit 追蹤），供使用者一鍵上傳至 WP 後台。

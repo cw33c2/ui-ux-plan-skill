@@ -110,7 +110,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   - 匹配 **行業專屬配色方案**（主色、輔色、CTA 著重色、背景色、文字色）。
   - 匹配 **Google Fonts** 精選字體搭配。
 - **🎬 4 大頂級視覺特效「全透明參數控制面板」 (Effect Transparent Control Panel)**：
-  當使用者勾選一個或多個特效時，AI 必須**單獨且詳細印出每個技能的所有具體參數與可修訂項**，讓使用者第一時間完全了解並可直接修改：
+  當使用者勾選一個或多個特效時，AI 必須**單獨且詳細印出每個技能的所有具體參數與可修訂項**，且**當含有圖片時必須標示圖片來源出處**，並在**每個技能最下方附上 [備註 / 擴充與替代建議]**，讓使用者第一時間完全了解並可直接修改或擴充：
 
   #### 1. 🔤 【技能一：文字逐字彈跳與漸層 (Stagger Text Animation)】
   ```yaml
@@ -122,6 +122,9 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   緩動物理手感 (Easing): "expo.out" (跑車級快彈慢煞車)
   文字漸層色彩 (Text Gradient): "linear-gradient(135deg, #f6d365 0%, #fda085 100%)" (金屬金黃)
   出現位置 (Trigger Position): 頁面一載入即播放 (也可改滾動到該區塊 50% 時出現)
+  [備註 / 擴充與替代建議]: 
+    - 💡 擴充事項：可增加「金屬光澤流動 (Shimmer Gradient Pass)」效果或懸停 3D 傾斜感 (Tilt Effect)。
+    - 🔄 替代方案：若字數極多或需要支援多語系換行防跑版，可改用 SplitType 的 `lines` 切分，或切換為純 CSS `@keyframes` 動畫減輕 JS 載入負擔。
   ```
 
   #### 2. 🍸 【技能二：SVG 遮罩放大揭露特效 (SVG Mask Zoom Reveal)】
@@ -132,20 +135,30 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   向下滑動距離 (Scroll End Distance): "+=2000px" (向下滑動 2000px 播放完畢)
   避震滾動手感 (Scrub): 0.8 秒 (給予平滑吸附手感)
   釘住畫面 (Pinning): pin: true (網頁停在原地不滑走，遮罩放完才繼續滑)
-  被揭露的高清圖片 (Revealed Image): "Ununsplash 酒吧質感大圖" (可替換自訂網址/路徑)
+  被揭露的高清圖片 (Revealed Image): "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b"
+  圖片來源 / 出處 (Image Source / Attribution): "Unsplash (免費商業授權圖片: 奢華酒吧質感大圖)"
   被揭露的標題與文字 (Revealed Content): "Crafted to Perfection" (可直接修改)
+  [備註 / 擴充與替代建议]:
+    - 💡 擴充事項：可增加「遮罩邊緣模糊 (Feather Glow)」或「雙重 SVG 遞進遮罩 (Dual Mask Wave)」。
+    - 🔄 替代方案：若不使用 SVG Mask，可改用 CSS `clip-path: circle(50% at 50% 50%)` 或 Canvas 繪圖模式 (globalCompositeOperation) 實現更相容的透視效果。
   ```
 
   #### 3. 🍎 【技能三：Apple 級影片滾動播放特效 (Scroll-bound Video)】
   ```yaml
   主角/產品圖片 (Original Image): "My Strict App 產生圖片" (Step 1 可替換)
+  圖片來源 / 出處 (Image Source / Attribution): "My Strict App AI 生成工具 (100% 原創主角圖片)"
   AI 動態影片 (Google Flow MP4): "Google Flow 轉 MP4" (Step 2 可替換)
+  影片來源 / 出處 (Video Source / Attribution): "Google Flow 雲端 AI 視訊生成引擎"
   PNG 圖片序列總幀數 (Frame Count): 147 張 (Ezgif 視訊轉 PNG 切分)
+  序列圖片來源 / 出處 (Sequence Source): "Ezgif Video-to-PNG Splitter 切分圖檔序列"
   向下滑動距離 (Scroll End Distance): "+=2500px" (向下滑動 2500px 完成播放)
   避震滾動手感 (Scrub): 0.5 秒 (毫秒級隨滑鼠順播與倒播)
   釘住畫面 (Pinning): pin: true (釘住 Canvas，播完才繼續往下滑)
   字幕一 (Text 1): "重塑音質，超越想像。" (於滾動 5%~25% 時出現，可改)
   字幕二 (Text 2): "隨滑鼠滾動，極速順播與倒播。" (於滾動 45%~65% 時出現，可改)
+  [備註 / 擴充與替代建議]:
+    - 💡 擴充事項：可增加「熱點標籤 (Interactive Hotspots)」隨產品旋轉停留在特定組件上（如耳機降噪晶片位置）。
+    - 🔄 替代方案：若圖檔序列體積較大 (如 >10MB)，可替代為 HTML5 `<video>` 標籤並綁定 `currentTime = scrollProgress * duration`，或改用 WebGL Three.js GLTF 3D 模型進行無死角滾動旋轉。
   ```
 
   #### 4. 🃏 【技能四：Flip.js 卡片佈局無縫過渡 (FLIP Animation)】
@@ -153,8 +166,13 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   分類按鈕列 (Categories): ["全部展示 (All)", "經典系列 (Classic)", "水果特調 (Fruit)"]
   平滑過渡時間 (Duration): 0.7 秒 (可改 0.5s 極速, 1.0s 慢速)
   卡片錯開滑動時間 (Stagger): 0.05 秒 (卡片順序滑動)
-  卡片資料內容 (Cards Data): [Mojito, Strawberry Daiquiri, Old Fashioned...] (可直接修改/新增卡片)
+  卡片資料與縮圖 (Cards Data & Thumbnails): 
+    - Mojito: "https://images.unsplash.com/photo-1551024709-8f23befc6f87" (出處: Unsplash)
+    - Old Fashioned: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b" (出處: Unsplash)
   淡入淡出縮放 (Scale & Fade): onEnter 0.8->1.0, onLeave 1.0->0.8
+  [備註 / 擴充與替代建議]:
+    - 💡 擴充事項：可結合「卡片點擊放大展開 modal (Shared Element Transition)」體驗。
+    - 🔄 替代方案：若不使用 GSAP Flip.js 擴充套件，可以改用原生 View Transitions API (`document.startViewTransition`) 或 CSS Grid `auto-fit` 搭配 Layout Animations 機制。
   ```
 
 - **即時修訂與馬上更新**：使用者可直接打字修改上述任何參數（例如：「將標題改成 AIRPODS PRO，遮罩改成圓形，影片滑動距離改為 +=3000px」），AI 立刻更新參數並重新編譯更新展示畫面！

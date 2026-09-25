@@ -109,8 +109,12 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   - 匹配 **UI 風格**（如 Glassmorphism, Soft UI, Minimalist, Neobrutalism 等）。
   - 匹配 **行業專屬配色方案**（主色、輔色、CTA 著重色、背景色、文字色）。
   - 匹配 **Google Fonts** 精選字體搭配。
-- **🎬 4 大頂級視覺特效「全透明參數控制面板」 (Effect Transparent Control Panel)**：
-  當使用者勾選一個或多個特效時，AI 必須**單獨且詳細印出每個技能的所有具體參數與可修訂項**，且**當含有圖片時必須標示圖片來源出處**，並在**每個技能最下方附上 [備註 / 擴充與替代建議]**，讓使用者第一時間完全了解並可直接修改或擴充：
+- **🎬 4 大頂級視覺特效「全透明參數控制面板」 (Effect Transparent Control Panel & Modularity Protocol)**：
+  - **🧩 100% 模組化拔插架構 (Modular Architecture)**：
+    - **必選核心模組 (Core Modules)**：🔤 `SplitText` (文字逐字彈跳) + 🃏 `Flip.js` (卡片無縫過渡) ➡️ 開發成本低、CP 值高、預設啟動。
+    - **選配高級模組 (Optional Advanced Modules)**：🍸 `SVG Mask Zoom Reveal` (遮罩揭露) + 🍎 `Apple Scroll Video` (蘋果級影片滾動) ➡️ 按需選配啟動。
+    - **步驟防忘顯式提示**：只要涉及蘋果級影片滾動特效，AI 必須**完整自動印出 4 步驟流水線指引**（Step 1: My Strict App 原圖 ➡️ Step 2: Google Flow MP4 視訊 ➡️ Step 3: Ezgif 轉 PNG 圖片序列 ➡️ Step 4: GSAP Canvas 滾動渲染），讓使用者不必尋找工具。
+  - **參數全透明與出處標示**：當使用者勾選一個或多個特效模組時，AI 必須**單獨且詳細印出每個技能的所有具體參數與可修訂項**，且**當含有圖片時必須標示圖片來源出處**，並在**每個技能最下方附上 [備註 / 擴充與替代建議]**，讓使用者第一時間完全了解並可直接修改或擴充：
 
   #### 1. 🔤 【技能一：文字逐字彈跳與漸層 (Stagger Text Animation)】
   ```yaml

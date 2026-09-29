@@ -121,6 +121,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 - 引導使用快速資產三部曲產出超連結：[My Strict App](https://my-strict-app.vercel.app/) ➡️ [Google Flow](https://flow.google.com/) ➡️ [Ezgif Video to GIF](https://ezgif.com/video-to-gif)。
 - 結合階段 2 匹配之 **4 大 Landing Page 佈局** (`references/landing-page-layouts.md`)、**3D Tooltip 微交互規範** (`references/micro-interactions.md`) 與 **D3.js / Effective-HTML 圖表原型庫** (`references/data-visuals-and-prototypes.md`)。
 - 在聊天室中產出獨立的 HTML/Tailwind/GSAP/D3.js 高質感互動式試玩畫面 (Artifact)。
+- **UI 三態設計展演 (The Holy Trinity)**：強制要求 AI 在設計資料清單或動態區塊時，必須在 Artifact 中實作「骨架屏 (Loading)」、「零資料空狀態 (Empty)」與「優雅錯誤 (Error)」三種極端情境的 Mock 畫面，供使用者測試，嚴禁只考慮資料填滿的理想狀態。
 - 使用者可在 Artifacts 中直接點擊按鈕、體驗 GSAP 動態視差、3D 摺疊/旋轉提示氣泡、D3 關係圖拖曳、切換頁籤。
 - 進入階段 4 前，AI 切換為「嚴格 UI 稽查員」產出白話文稽查報告。
 - 經使用者修改並發出「設計圖過關！」指令後，方可解鎖階段 4。
@@ -144,6 +145,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   - [ ] 支援 `prefers-reduced-motion` 減弱動畫
   - [ ] 鍵盤 Focus 狀態清晰
   - [ ] **API 防護鎖定**：所有非同步請求按鈕皆具備 `isThinking / isLoading` 狀態與 `disabled` 防連點保護。
+  - [ ] **UI 三態完備性**：所有資料流區塊皆已實作 Loading 骨架屏、Empty 空狀態插畫/引導、Error 優雅錯誤處理。
 
 ### 🔹 階段 6：設計系統持久化 (MASTER.md)
 - 將最終確立的設計規範與 GSAP 動態參數儲存至 `design-system/[project-name]/MASTER.md`。

@@ -99,10 +99,12 @@ description: 啟動 A計畫懶人包 SOP (從零到一完整開發與維護流�
 ### 🔹 階段 2：需求對齊與 UI/UX 藍圖設計 (防做錯)
 - **評估需求清晰度**：依據「專屬 AI 顧問溝通協議」，需求清晰則直接下一步，模糊或有風險才觸發追問。
 - **初始化字典檔 (Domain Dictionary)**：統一專案中英文名詞對照，並建立/更新至 `docs/DICTIONARY.md`。
-- **需求轉化與設計文件**：呼叫 `/hdb:design` 產出 PRD 與架構文件，更新 `docs/PROJECT_STATUS.md` 並同步轉換為 GitHub Issues。（註：PRD 等文件可寫入本地檔案）
-- **UI/UX 風格提案與自動規則匹配 (Vibe Check)**：強制自動調用 `ui-ux-pro-max` 技能大腦（`search.py`），進行 192 條行業規則、79 條 UI 風格、配色方案與 Google Fonts 字體自動匹配。
-- **假設計圖試玩與預覽 (Interactive Mockup & Visual QA)**：提供兩種預覽模式：A. 在聊天室 Artifacts 產出符合 UI UX Pro Max 規範的高質感 HTML 假畫面；B. 建立前端 Mock 組件並使用 Playwright/shot-scraper 自動截圖供使用者審核。
-- **設計圖通關閘門**：未得到「設計圖過關！」指令前，嚴禁將最終正式業務邏輯程式碼改寫入專案檔案。
+- **需求轉化與設計文件**：呼叫 `/hdb:design` 產出 PRD 與架構文件，更新 `docs/PROJECT_STATUS.md` 並同步轉換為 GitHub Issues。
+- **發包至米其林廚房 (UI/UX 專屬通道)**：當進入前端視覺與 UI/UX 設計環節時，**`/a-plan` (餐廳經理) 必須全面將工作轉交給 `/ui-ux-plan` (米其林廚房 SOP)**。
+  - AI 必須明確引導使用者：「前端設計準備開始，我們將進入嚴格的『米其林 UI/UX 廚房』流程。」
+  - 在 `/ui-ux-plan` 流程中，將由**行政主廚 (AI Planner)** 負責盤點食材、呼叫 `ui-ux-pro-max-skill` (外包菜商) 決定風格，並產出《米其林菜單確認單 (Blueprint)》與 HTML 試吃品。
+  - 在獲得老闆「設計圖過關！」的簽核後，才由**二廚 (AI Coder)** 接手，嚴格遵守 300 行鐵律寫入正式程式碼。
+- **設計圖通關閘門**：未經 `/ui-ux-plan` 流程審批並產出 `docs/BLUEPRINT.md` 前，嚴禁將任何前端頁面邏輯寫入專案檔案。
 
 ### 🔹 階段 3：核心邏輯與分區開發 (一步步來)
 - **分區實作**：使用 `/implement` 實作核心邏輯並注意空值防禦。

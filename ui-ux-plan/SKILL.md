@@ -82,6 +82,11 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
    - 淺色模式文字對比度必須至少 `4.5:1`。
    - 所有可點擊元素具備 `cursor-pointer` 與清晰可見的鍵盤 Focus 狀態。
 11. **多裝置響應式斷點**：設計與測試必須同時覆蓋 `375px` (手機)、`768px` (平板)、`1024px` (小筆電)、`1440px` (大螢幕)。
+12. **🔊 聽覺與多媒體 UX 規範 (Audio UX Protocol)**：
+   - 任何網頁背景音樂或音效，**絕對不可設定自動播放 (Autoplay)**。
+   - 必須綁定在使用者的第一次點擊動作上，並提供明顯的靜音/播放 UI 切換。
+13. **現代框架字體避坑鐵律**：
+   - 當使用 Next.js 15+ 搭配 Turbopack 遇到 `next/font` 解析崩潰時，立刻啟動備用方案：改用 CSS `@import url()` 於全域樣式表掛載字體，嚴禁浪費 Token 反覆除錯。
 
 ---
 
@@ -94,29 +99,41 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
 - 確立品牌視覺氛圍（如：奢華高雅、科技未來感、溫暖親和、極簡專業）。
 - 支援 `/wait-what` 解說視覺調性與動畫節奏。
 
-### 🔹 階段 2：自動匹配 UI 風格、配色、字體與 GSAP 動態預設 (UI UX Pro Max 數據庫)
+### 🔹 階段 2：自動匹配 UI 風格、配色、字體、佈局、3D 微交互與數據視覺化 (UI UX Pro Max + Designmodo + D3.js 數據庫)
 - 自動調用 `ui-ux-pro-max` 數據庫：
   - 匹配 **79 種 UI 風格**（如 Glassmorphism, Soft UI, Minimalist, Neobrutalism 等）。
   - 匹配 **192 套行業專屬配色方案**（主色、輔色、CTA 著重色、背景色、文字色）。
   - 匹配 **74 組合 Google Fonts** 精選字體搭配。
   - 匹配 **快速資產三部曲** 與 **GSAP 微交互動態預設**（pin, scrub, end 動態滾動設定）。
+- 自動調用 `references/landing-page-layouts.md` 4 大 Landing Page 佈局庫：
+  - 1. **Animated Landing Page** ➡️ 主打動畫展示與數據計數器落地頁。
+  - 2. **Horizontal Scroll One Page** ➡️ 主打故事性 / 時間軸之 GSAP 水平滾動視差頁面。
+  - 3. **App / SaaS Landing Page** ➡️ 主打產品功能與浮空 Mockup 展示頁面。
+  - 4. **Portfolio One Page** ➡️ 主打個人 / 團隊作品集與作品卡片網格頁面。
+- 自動調用 `references/micro-interactions.md` 3D Tooltip 與微交互庫：
+  - 套用 5 大 3D 登場視覺 (Fold, Roll, Slide, Scale) 與 WAI-ARIA 無障礙規範。
+- 自動調用 `references/data-visuals-and-prototypes.md` D3.js 與 Effective-HTML 原型圖表庫：
+  - 1. **D3.js 數據視覺化** ➡️ Force-Directed 關係網絡圖、動態流量圖。
+  - 2. **Effective-HTML 原型規範** ➡️ 單檔獨立 (Self-contained) 高保真 HTML 流程圖與互動 Wireframes。
 - 產出該行業的 **反模式 (Don'ts)** 警告（例如金融業避開霓虹粉紫漸層與過於誇張的甩動動畫）。
 
-### 🔹 階段 3：HTML Artifacts 互動模擬畫面試玩 (雙預覽模式與第三者稽查)
+### 🔹 階段 3：HTML Artifacts 互動模擬畫面試玩 (雙預覽模式、4大版型、3D微交互、D3圖表與第三者稽查)
 - 引導使用快速資產三部曲產出超連結：[My Strict App](https://my-strict-app.vercel.app/) ➡️ [Google Flow](https://flow.google.com/) ➡️ [Ezgif Video to GIF](https://ezgif.com/video-to-gif)。
-- 在聊天室中產出獨立的 HTML/Tailwind/GSAP 高質感互動式試玩畫面 (Artifact)。
-- 使用者可在 Artifacts 中直接點擊按鈕、體驗 GSAP 動畫過渡 (`pin`, `scrub`, `end`)、切換頁籤。
+- 結合階段 2 匹配之 **4 大 Landing Page 佈局** (`references/landing-page-layouts.md`)、**3D Tooltip 微交互規範** (`references/micro-interactions.md`) 與 **D3.js / Effective-HTML 圖表原型庫** (`references/data-visuals-and-prototypes.md`)。
+- 在聊天室中產出獨立的 HTML/Tailwind/GSAP/D3.js 高質感互動式試玩畫面 (Artifact)。
+- 使用者可在 Artifacts 中直接點擊按鈕、體驗 GSAP 動態視差、3D 摺疊/旋轉提示氣泡、D3 關係圖拖曳、切換頁籤。
 - 進入階段 4 前，AI 切換為「嚴格 UI 稽查員」產出白話文稽查報告。
 - 經使用者修改並發出「設計圖過關！」指令後，方可解鎖階段 4。
 
-### 🔹 階段 4：組件化與代碼切分寫入 (GSAP 記憶體回收與時光機)
+### 🔹 階段 4：組件化與代碼切分寫入 (強制 300 行鐵律)
 - 寫入程式碼前自動執行 Git 本地時光機快照 (`git commit`)。
-- 將通過審核的 HTML 畫面拆解為模組化前端組件（React / Vue / HTML / Tailwind / Svelte 等指定技術棧）。
+- **組件化鐵律**：嚴格執行「單一檔案不超過 300 行」限制。強制要求 AI 建立 `components/` 資料夾，將 Modal、Calendar、Player 等獨立區塊切分為獨立組件，嚴禁將所有邏輯塞入單一頁面。
 - 實作 GSAP 動畫時自動配置 `pin: true`, `scrub: 0.8`, `end: '+=2000'` 與卸載清理 (`ctx.revert()`)，配置 Mock Data 確保畫面完整呈現。若寫壞隨時可叫 `/rewind` 倒轉。
 
-### 🔹 階段 5：交付前瘋狂奧客極限測試與無障礙檢驗 (Visual & Animation Stress Test)
+### 🔹 階段 5：交付前瘋狂奧客極限測試與無障礙檢驗 (Visual, Animation & API Stress Test)
 - **瘋狂奧客測試**：
   - 注入 200 字極長中文標題、超大圖片、極端窄屏 (320px)、快速連續滾動/點擊測試 GSAP 動畫是否順暢不卡頓。
+  - **狂點攻擊測試**：針對所有 API / Async 按鈕進行快速連點測試，確保不會發送重複請求。
 - **檢查清單核對**：
   - [ ] 無 Emoji 圖示（全數使用 SVG）
   - [ ] 可點擊元素具備 `cursor-pointer`
@@ -126,6 +143,7 @@ AI 在任何視覺討論中，必須嚴格遵守「先聆聽、後診斷、防�
   - [ ] GSAP 動畫已設定卸載記憶體回收 (`revert()`)
   - [ ] 支援 `prefers-reduced-motion` 減弱動畫
   - [ ] 鍵盤 Focus 狀態清晰
+  - [ ] **API 防護鎖定**：所有非同步請求按鈕皆具備 `isThinking / isLoading` 狀態與 `disabled` 防連點保護。
 
 ### 🔹 階段 6：設計系統持久化 (MASTER.md)
 - 將最終確立的設計規範與 GSAP 動態參數儲存至 `design-system/[project-name]/MASTER.md`。

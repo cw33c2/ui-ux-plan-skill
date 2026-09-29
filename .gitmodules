@@ -1,0 +1,3 @@
+[submodule "peo-plan"]
+	path = peo-plan
+	url = https://github.com/cw33c2/peo-plan.git
